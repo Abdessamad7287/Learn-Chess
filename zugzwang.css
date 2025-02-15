@@ -1,0 +1,108 @@
+:root{
+    --bgColor-1: #ffffff;
+    --bgColor-2: #000000;
+    --mainTextClr: #000000;
+    --secondTextClr: #ffffff;
+    --hoverBgClr: #555;
+}
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body{
+    font-size: 10px;
+}
+nav{
+    background-color: var(--bgColor-2);
+    color: var(--secondTextClr);
+    font-size: 2rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+}
+.logo h1{
+    font-size: 3rem;
+    cursor: pointer;
+    transition: .3s;
+}
+.logo h1:hover{
+    transform: scale(1.1);
+}
+.nav-bar{
+    display: flex;
+    font-weight: 900;
+}
+.nav-bar .home{
+    margin-right: 30rem;
+}
+.nav-bar ul li{
+    list-style: none;
+}
+.nav-bar ul li a{
+    text-decoration: none;
+    color: var(--secondTextClr);
+}
+.nav-bar ul li a:hover{
+    text-decoration: underline;
+}
+.sign-in button{
+    background: linear-gradient(45deg, #ffd700, #be8900);
+    border: none;
+    padding: 1rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.sign-in button:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgb(255, 217, 0);
+}  
+.sign-in a {
+    color: var(--mainTextClr);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1rem;
+}
+h3{
+    margin-top: 1rem;
+    margin-left: 30rem;
+    font-size: 1.5rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+p{
+    font-size: 2rem;
+    margin: 2rem;
+    width: 70rem;
+}
+.container{
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.container img{
+    margin-left: 30rem;
+}
+.container p{
+    font-size: 1.7rem;
+    margin-bottom: 0;
+    margin-top: 0.4rem;
+}
+footer {
+    background-color: var(--bgColor-2);
+    color: var(--secondTextClr);
+    text-align: center;
+    padding: 1rem;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    margin-top: 1rem;
+}
+footer p{
+    font-size: 2rem;
+    font-weight: 900;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}

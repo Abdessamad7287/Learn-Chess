@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess Openings Tutorial</title>
+    <link rel="stylesheet" href="king's-gambit.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.css">
+    <style>
+        :root{
+            --bgColor-1: #ffffff;
+            --bgColor-2: #000000;
+            --mainTextClr: #000000;
+            --secondTextClr: #ffffff;
+            --hoverBgClr: #555;
+            --borderClr: #007bff;
+        }
+        #board, #board1, #board2, #board3 {
+            margin: 2rem auto;
+            width: 30rem;
+        }
+
+        .control-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        button {
+            padding: 1rem 2rem;
+            background-color: var(--bgColor-2);
+            color: var(--secondTextClr);
+            border: none;
+            border-radius: 1rem;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: var(--hoverBgClr);
+        }
+
+        button:disabled {
+            background-color: var(--hoverBgClr);
+            cursor: not-allowed;
+        }
+
+        #move-description, #move-description1, #move-description2, #move-description3 {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-top: 2rem;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-weight: 900;
+        }
+
+        #move-list, #move-list1, #move-list2, #move-list3 {
+            margin: 2rem auto;
+            width: 90%;
+            text-align: center;
+            direction: rtl;
+            font-size: 1rem;
+        }
+
+        #move-list span, #move-list1 span, #move-list2 span, #move-list3 span {
+            display: inline-block;
+            margin: 0.5rem;
+            padding: 0.4rem 0.6rem;
+            border: 0.2rem solid var(--borderClr);
+            border-radius: 0.2rem;
+            background-color: var(--bgColor-1);
+        }
+
+        .highlight {
+            background-color: rgba(255, 0, 0, 1) !important;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="logo">
+            <h1>Learn Chess</h1>
+        </div>
+        <div class="nav-bar">
+            <div class="home">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                </ul>
+            </div>
+            <div class="end">
+                <ul>
+                    <li><a href="openings.html">Opening</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="sign-in">
+            <button><a href="#">Sign In</a></button>
+        </div>
+    </nav>
+    <div class="container">
+        <h1>King's Gambit Opening</h1>
+        <h2>What's King's Gambit:</h2>
+        <p>The King's Gambit is an aggressive and bold chess opening for White, aiming to control the center early while offering a pawn to Black for rapid development. It starts with the following moves:</p>
+        <ol>
+            <li><mark>e4 e5</mark></li>
+            <li><mark>f4</mark></li>
+        </ol>
+        <p>
+            Here, White sacrifices the f-pawn with the goal of gaining quick development and attacking chances, especially along the f-file and the center. Black has several responses, but the two most common are:
+        </p>
+        <ul>
+            <li><mark>Accepted (King's Gambit Accepted)</mark>: Black accepts the pawn sacrifice with 2... exf4. White can then play moves like Nf3, Bc4, or d4 to open the game further and put pressure on Black's position.</li>
+            <li><mark>Declined (King's Gambit Declined)</mark>: Black declines the pawn sacrifice, typically with 2... d6 or 2... Nc6, aiming to solidify the position while avoiding the immediate complications.</li>
+        </ul>
+        <h2>What's the point of this Opening:</h2>
+        <p>
+            It's a very sharp opening that leads to imbalanced positions, so it's popular among aggressive players and those who enjoy tactical battles.
+        </p>
+        <h2>Conclusion</h2>
+        <p>
+            The King’s Gambit may not be as popular in modern chess, but its attacking potential remains as deadly as ever especially against unprepared opponents!
+            <b>If you’re willing to sacrifice a pawn for rapid development and a fierce kingside attack, the King’s Gambit might be the perfect opening for you</b>.
+        </p>
+        <br>
+        <br>
+        <p>clik the button below for move on to Queen's Gambit Opening</p>
+        <br>
+        <button class="game"><a href="Queen's-gambit.html">Next</a></button>
+    </div>
+    <h3>King's Gambit Opening &#128071:</h3>
+    <div id="board"></div>
+    <div id="move-description"></div>
+    <div class="control-buttons">
+        <button id="prev-btn" disabled>Back</button>
+        <button id="next-btn">Next</button>
+        <button id="reset-btn">Restart</button>
+    </div>
+    <div id="move-list"></div>
+    <h3>King's Gambit Accepted &#128071:</h3>
+    <div id="board1"></div>
+    <div id="move-description1"></div>
+    <div class="control-buttons">
+        <button id="prev-btn1" disabled>Back</button>
+        <button id="next-btn1">Next</button>
+        <button id="reset-btn1">Restart</button>
+    </div>
+    <div id="move-list1"></div>
+    <h3>The Muzio Gambit &#128071:</h3>
+    <div id="board2"></div>
+    <div id="move-description2"></div>
+    <div class="control-buttons">
+        <button id="prev-btn2" disabled>Back</button>
+        <button id="next-btn2">Next</button>
+        <button id="reset-btn2">Restart</button>
+    </div>
+    <div id="move-list2"></div>
+    <h3>King’s Gambit Declined &#128071:</h3>
+    <div id="board3"></div>
+    <div id="move-description3"></div>
+    <div class="control-buttons">
+        <button id="prev-btn3" disabled>Back</button>
+        <button id="next-btn3">Next</button>
+        <button id="reset-btn3">Restart</button>
+    </div>
+    <div id="move-list3"></div>
+    <footer>
+        <p>&copy; 2025 Chess Website | All rights reserved.</p>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+    <script>
+        function ChessBoardManager(boardId, descId, moveListId, prevBtnId, nextBtnId, resetBtnId, storageKey, moves) {
+            const board = Chessboard(boardId, {
+                pieceTheme: 'https://chessboardjs.com/img/chesspieces/wikipedia/{piece}.png'
+            });
+        const game = new Chess();
+        let currentMove = 0;
+        
+        const savedPosition = localStorage.getItem(storageKey);
+        if (savedPosition) {
+            game.load(savedPosition);
+            board.position(savedPosition);
+        } else {
+            board.position('start');
+        }
+        function updateDescription  () {
+            document.getElementById(descId).textContent = moves[currentMove]?.description;
+        }
+        function updateMoveList  ()  {
+            const moveList = document.getElementById(moveListId);
+            moveList.innerHTML = '';
+            game.history().forEach((move, index) => {
+                const span = document.createElement('span');
+                span.textContent = `${index + 1}. ${move}`;
+                moveList.appendChild(span);
+            });
+        }
+        function savePosition () {
+            localStorage.setItem(storageKey, game.fen());
+        }
+        function highlightSquares(from, to) {
+            $('.highlight').removeClass('highlight');
+            $(`[data-square="${from}"]`).addClass('highlight');
+            $(`[data-square="${to}"]`).addClass('highlight');
+        }
+
+        document.getElementById(nextBtnId).addEventListener('click', () => {
+            if (currentMove < moves.length) {
+                const move = game.move(moves[currentMove].move);
+                board.position(game.fen());
+                updateDescription();
+                updateMoveList();
+                currentMove++;
+
+                if (move) {
+                    highlightSquares(move.from, move.to);
+                }
+                savePosition();
+                document.getElementById(prevBtnId).disabled = false;
+                if (currentMove === moves.length) {
+                    document.getElementById(nextBtnId).disabled = true;
+                }
+            }
+        });
+
+        document.getElementById(prevBtnId).addEventListener('click', () => {
+            if (currentMove > 0) {
+                game.undo();
+                currentMove--;
+                board.position(game.fen());
+                updateDescription();
+                updateMoveList();
+                $('.highlight').removeClass('highlight');
+                document.getElementById(nextBtnId).disabled = false;
+                if (currentMove === 0) {
+                    document.getElementById(prevBtnId).disabled = true;
+                }
+                savePosition();
+            }
+        });
+        document.getElementById(resetBtnId).addEventListener('click', () => {
+            game.reset();
+            board.position('start');
+            currentMove = 0;
+            updateDescription();
+            updateMoveList();
+            document.getElementById(prevBtnId).disabled = true;
+            document.getElementById(nextBtnId).disabled = false;
+            $('.highlight').removeClass('highlight');
+            localStorage.removeItem(storageKey);
+        });
+        updateDescription();
+        updateMoveList();
+    }
+    ChessBoardManager('board', 'move-description', 'move-list', 'prev-btn', 'next-btn', 'reset-btn', 'chessPosition1', [
+            { move: 'e4', description: 'White controls the center.' },
+            { move: 'e5', description: 'Black responds symmetrically.' },
+            { move: 'f4', description: 'White plays King’s Gambit.' }
+        ]);
+
+        ChessBoardManager('board1', 'move-description1', 'move-list1', 'prev-btn1', 'next-btn1', 'reset-btn1', 'chessPosition2', [
+            { move: 'e4', description: 'White controls the center.' },
+            { move: 'e5', description: 'Black responds symmetrically.' },
+            { move: 'f4', description: 'White plays King’s Gambit.' },
+            { move: 'exf4', description: 'And Black Accepted it' },
+            { move: 'Nf3', description: '' },
+            { move: 'g5', description: '' },
+        ]);
+        ChessBoardManager('board2', 'move-description2', 'move-list2', 'prev-btn2', 'next-btn2', 'reset-btn2', 'chessPosition3', [
+            { move: 'e4', description: 'White controls the center.' },
+            { move: 'e5', description: 'Black responds symmetrically.' },
+            { move: 'f4', description: 'White plays King’s Gambit.' },
+            { move: 'exf4', description: 'And Black Accepted it' },
+            { move: 'Nf3', description: '' },
+            { move: 'g5', description: '' },
+            { move: 'Bc4', description: '' },
+            { move: 'g4', description: '' },
+            { move: 'O-O', description: 'At this point, White sacrifices their knight to gain a rapid lead in development and attack' },
+        ]);
+        ChessBoardManager('board3', 'move-description3', 'move-list3', 'prev-btn3', 'next-btn3', 'reset-btn3', 'chessPosition4', [
+            { move: 'e4', description: 'White controls the center.' },
+            { move: 'e5', description: 'Black responds symmetrically.' },
+            { move: 'f4', description: 'White plays King’s Gambit.' },
+            { move: 'Bc5', description: 'And Black Declined it' },
+            { move: 'Nf3', description: '' },
+            { move: 'd6', description: '' },
+            { move: 'c3', description: '' },
+            { move: 'Nf6', description: '' },
+            { move: 'd4', description: '' },
+            { move: 'exd4', description: '' },
+            { move: 'cxd4', description: '' },
+            { move: 'Bb6', description: '' },
+            { move: 'Nc3', description: '' },
+            { move: 'O-O', description: '' },
+        ]);
+    </script>
+</body>
+
+</html>

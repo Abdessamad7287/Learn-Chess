@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess Basics</title>
+    <link rel="stylesheet" href="zugzwang.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.css">
+    <style>
+        :root{
+            --bgColor-1: #ffffff;
+            --bgColor-2: #000000;
+            --mainTextClr: #000000;
+            --secondTextClr: #ffffff;
+            --hoverBgClr: #555;
+            --borderClr: #007bff;
+        }
+        #board {
+            margin: 2rem auto;
+            width: 30rem;
+        }
+
+        .control-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        button {
+            padding: 1rem 2rem;
+            background-color: var(--bgColor-2);
+            color: var(--secondTextClr);
+            border: none;
+            border-radius: 1rem;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: var(--hoverBgClr);
+        }
+
+        button:disabled {
+            background-color: var(--hoverBgClr);
+            cursor: not-allowed;
+        }
+
+        #move-description {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-top: 2rem;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-weight: 900;
+        }
+
+        #move-list{
+            margin: 2rem auto;
+            width: 90%;
+            text-align: center;
+            direction: rtl;
+            font-size: 1rem;
+        }
+
+        #move-list span {
+            display: inline-block;
+            margin: 0.5rem;
+            padding: 0.4rem 0.6rem;
+            border: 0.2rem solid var(--borderClr);
+            border-radius: 0.2rem;
+            background-color: var(--bgColor-1);
+        }
+
+        .highlight {
+            background-color: rgba(255, 0, 0, 1) !important;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <h1>Learn Chess</h1>
+        </div>
+        <div class="nav-bar">
+            <div class="home">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                </ul>
+            </div>
+            <div class="end">
+                <ul>
+                    <li><a href="openings.html">Opening</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="sign-in">
+            <button><a href="#">Sign In</a></button>
+        </div>
+    </nav>
+    <br>
+    <h3>Zugzwang: How It Works in Chess</h3>
+    <p>
+        In Chess, <b><i>Zugzwang</i>  is a German term that describes a situation where a player is forced to move, but any legal move will weaken their position or lead to a loss.</b> This tactical motif is especially powerful in the endgame, where a single tempo can determine the outcome of the game.
+
+        Zugzwang can also appear in the middlegame, but it is most common in the endgame when fewer pieces remain, and every move carries greater weight. Mastering zugzwang is essential for improving endgame play, as it can turn a seemingly equal position into a decisive victory.
+        
+        In this article, we will explore the concept of zugzwang in detail, understand how it works, and analyze key examples where it plays a crucial role in chess strategy.
+                
+    </p>
+    <br>
+    <div class="container">
+        <h3>Example of a Simple Zugzwang Position &#128071:</h3>
+        <img src="img/openings/zugzwang-1.png" alt="Zugzwang">
+    <p>
+        In the above position, Black is out of moves. Any king move will lead to White using his king to support his pawn to promote to a queen.
+    </p>
+    <p>
+        <b><i>Moves:</i>(...Ke7)-(Kc7 Ke6)-(d8=Q...)</b>
+    </p>
+    </div>
+    <div class="container">
+        <h3>Immortal Zugzwang Game &#128071:</h3>
+        <p>
+            <b>We can’t talk about zugzwang without mentioning one of the most famous examples in chess history</b>. While zugzwang is typically associated with endgames, this remarkable case occurred in the middlegame.
+
+<i>In 1923</i>, a legendary game between <mark><b>Friedrich Sämisch and Aron Nimzowitsch</b></mark> showcased a stunning application of zugzwang, earning it the title "The Immortal Zugzwang Game." The critical moment came when Nimzowitsch played the seemingly quiet but brilliant move …h6!!, leaving Sämisch with no good moves—any move he made would weaken his position.
+
+Let’s take a closer look at this incredible moment and how Nimzowitsch used zugzwang to secure his victory.
+        </p>
+        <br>
+        <img src="img/openings/zug2.png" alt="best zugzwang game">
+    
+    </div>
+    <h3>The match between Friedrich Sämisch and Aron Nimzowitsch &#128071:</h3>
+    <div id="board"></div>
+    <div id="move-description"></div>
+    <div class="control-buttons">
+        <button id="prev-btn" disabled>Back</button>
+        <button id="next-btn">Next</button>
+        <button id="reset-btn">Restart</button>
+    </div>
+    <div id="move-list"></div>
+    <footer>
+        <p>&copy; 2025 Chess Website | All rights reserved.</p>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+    <script>
+        function ChessBoardManager(boardId, descId, moveListId, prevBtnId, nextBtnId, resetBtnId, storageKey, moves) {
+            const board = Chessboard(boardId, {
+                pieceTheme: 'https://chessboardjs.com/img/chesspieces/wikipedia/{piece}.png'
+            });
+        const game = new Chess();
+        let currentMove = 0;
+        
+        const savedPosition = localStorage.getItem(storageKey);
+        if (savedPosition) {
+            game.load(savedPosition);
+            board.position(savedPosition);
+        } else {
+            board.position('start');
+        }
+        function updateDescription  () {
+            document.getElementById(descId).textContent = moves[currentMove]?.description;
+        }
+        function updateMoveList  ()  {
+            const moveList = document.getElementById(moveListId);
+            moveList.innerHTML = '';
+            game.history().forEach((move, index) => {
+                const span = document.createElement('span');
+                span.textContent = `${index + 1}. ${move}`;
+                moveList.appendChild(span);
+            });
+        }
+        function savePosition () {
+            localStorage.setItem(storageKey, game.fen());
+        }
+        function highlightSquares(from, to) {
+            $('.highlight').removeClass('highlight');
+            $(`[data-square="${from}"]`).addClass('highlight');
+            $(`[data-square="${to}"]`).addClass('highlight');
+        }
+
+        document.getElementById(nextBtnId).addEventListener('click', () => {
+            if (currentMove < moves.length) {
+                const move = game.move(moves[currentMove].move);
+                board.position(game.fen());
+                updateDescription();
+                updateMoveList();
+                currentMove++;
+
+                if (move) {
+                    highlightSquares(move.from, move.to);
+                }
+                savePosition();
+                document.getElementById(prevBtnId).disabled = false;
+                if (currentMove === moves.length) {
+                    document.getElementById(nextBtnId).disabled = true;
+                }
+            }
+        });
+
+        document.getElementById(prevBtnId).addEventListener('click', () => {
+            if (currentMove > 0) {
+                game.undo();
+                currentMove--;
+                board.position(game.fen());
+                updateDescription();
+                updateMoveList();
+                $('.highlight').removeClass('highlight');
+                document.getElementById(nextBtnId).disabled = false;
+                if (currentMove === 0) {
+                    document.getElementById(prevBtnId).disabled = true;
+                }
+                savePosition();
+            }
+        });
+        document.getElementById(resetBtnId).addEventListener('click', () => {
+            game.reset();
+            board.position('start');
+            currentMove = 0;
+            updateDescription();
+            updateMoveList();
+            document.getElementById(prevBtnId).disabled = true;
+            document.getElementById(nextBtnId).disabled = false;
+            $('.highlight').removeClass('highlight');
+            localStorage.removeItem(storageKey);
+        });
+        updateDescription();
+        updateMoveList();
+    }
+    ChessBoardManager('board', 'move-description', 'move-list', 'prev-btn', 'next-btn', 'reset-btn', 'chessPosition1', [
+            { move: 'd4', description: '' },
+            { move: 'Nf6', description: '' },
+            { move: 'c4', description: '' },
+            { move: 'e6', description: '' },
+            { move: 'Nf3', description: '' },
+            { move: 'b6', description: '' },
+            { move: 'g3', description: '' },
+            { move: 'Bb7', description: '' },
+            { move: 'Bg2', description: '' },
+            { move: 'Be7', description: '' },
+            { move: 'Nc3', description: '' },
+            { move: 'O-O', description: '' },
+            { move: 'O-O', description: '' },
+            { move: 'd5', description: '' },
+            { move: 'Ne5', description: '' },
+            { move: 'c6', description: '' },
+            { move: 'cxd5', description: '' },
+            { move: 'cxd5', description: '' },
+            { move: 'Bf4', description: '' },
+            { move: 'a6', description: '' },
+            { move: 'Rc1', description: '' },
+            { move: 'b5', description: '' },
+            { move: 'Qb3', description: '' },
+            { move: 'Nc6', description: '' },
+            { move: 'Nxc6', description: '' },
+            { move: 'Bxc6', description: '' },
+            { move: 'h3', description: '' },
+            { move: 'Qd7', description: '' },
+            { move: 'Kh2', description: '' },
+            { move: 'Nh5', description: '' },
+            { move: 'Bd2', description: '' },
+            { move: 'f5', description: '' },
+            { move: 'Qd1', description: '' },
+            { move: 'b4', description: '' },
+            { move: 'Nb1', description: '' },
+            { move: 'Bb5', description: '' },
+            { move: 'Rg1', description: '' },
+            { move: 'Bd6', description: '' },
+            { move: 'e4', description: '' },
+            { move: 'fxe4', description: '' },
+            { move: 'Qxh5', description: '' },
+            { move: 'Rxf2', description: '' },
+            { move: 'Qg5', description: '' },
+            { move: 'Raf8', description: '' },
+            { move: 'Kh1', description: '' },
+            { move: 'R8f5', description: '' },
+            { move: 'Qe3', description: '' },
+            { move: 'Bd3', description: '' },
+            { move: 'Rce1', description: '' },
+            { move: 'h6', description: '' },
+        ]);
+    </script>
+</body>
+</html>
